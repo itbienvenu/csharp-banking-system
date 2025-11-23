@@ -23,23 +23,6 @@ namespace BankingSystemCLI
             return attemptedPassword == this._userPassword;
         }
 
-        // public void registerUser(String firstName, String lastName, String email, String password)
-
-        // {
-
-        //     var users = new List<User>();
-        //     try
-        //     {
-        //         var newUser = new User(firstName, lastName, email, password);
-        //         users.Add(newUser);
-        //         Console.WriteLine($"Created new user {firstName}");
-        //     }
-        //     catch (Exception)
-        //     {
-        //         throw new Exception("Faild to create a new User");
-        //     }
-
-        // }
     }
 
 
@@ -49,9 +32,10 @@ namespace BankingSystemCLI
         {
             UserService service = new UserService();
             Console.WriteLine(@"Hello this are Options to use this System
-        1. Creating a new User
-        2. Get All Users
-        3. Exiting the progrm");
+            1. Creating a new User
+            2. Login User
+            3. Get All Users
+            4. Exiting the progrm");
 
             bool isRunning = true;
 
@@ -81,14 +65,26 @@ namespace BankingSystemCLI
 
                         service.RegisterUser(firstName, lastName, email, password);
                         break;
+                    
                     case "2":
+                        Console.Write("Email: ");
+                        string loginEmail = Console.ReadLine();
+
+                        Console.Write("Password: ");
+                        string loginPassword = Console.ReadLine();
+
+                        bool loginSuccess = service.LoginUser(loginEmail, loginPassword);
+                        break;
+
+                    case "3":
                     var users = service.GetAllUsers();
+                    Console.WriteLine("\nRegistered Users:");
                     foreach (var user in users)
                     {
-                        Console.WriteLine(user);
+                        Console.WriteLine($"- {user.FirstName} {user.LastName} ({user.Email})");
                     }
                     break;
-                    case "3":
+                    case "4":
                         Console.WriteLine("Exiting the Program .............");
                         isRunning = false;
                         break;
